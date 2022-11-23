@@ -19,7 +19,7 @@ steps:
   id: node-install
   entrypoint: npm
   args: ['install']
-  waitFor: [ " -" ]
+  waitFor: ['-']
 # Run tests
 - name: node
   entrypoint: npm
