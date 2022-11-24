@@ -55,7 +55,7 @@ steps:
 # 7
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
-  args: [ 'update --allow-releaseinfo-change', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y']
+  args: [ 'update', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y']
 # 8
 - name: python
   entrypoint: python3
