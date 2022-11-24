@@ -31,6 +31,7 @@ steps:
   args: ['run', 'build']
   waitFor:
     - node-install
+# Displaying Google Id
 - id: Setup Google Project ID
   name: 'ubuntu'
   entrypoint: bash
@@ -43,12 +44,14 @@ steps:
     - |
       echo ${PROJECT_ID} &&
       echo GOOGLE_PROJECT_ID
+# Python version display
 - name: python
   entrypoint: python3
   args: ["--version"]
+# get-pip is downloading
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: 'curl'
-  args: [ 'https://bootstrap.pypa.io/get-pip.py', '-o', 'get-pip.py', '--user' ]
+  args: ['https://bootstrap.pypa.io/get-pip.py -o get-pip.py']
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
   args: [ 'update', '--allow-releaseinfo-change', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y', '--user' ]
