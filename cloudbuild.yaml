@@ -31,4 +31,39 @@ steps:
   args: ['run', 'build']
   waitFor:
     - node-install
+- id: Setup Google Project ID
+  name: 'ubuntu'
+  entrypoint: bash
+  env:
+    - 'GCLOUD_SERVICE_KEY=${_SERVICE_ACCOUNT}'
+    - 'project_name=${PROJECT_ID}'
+    - 'GOOGLE_PROJECT_ID=${!project_name}'
+  args:
+    - -c
+    - |
+      echo ${_SERVICE_ACCOUNT} &&
+      echo ${PROJECT_ID} &&
+      echo GOOGLE_PROJECT_ID
+- id: Store Service Account
+  name: 'bash'
+  script: |
+      echo ${_SERVICE_ACCOUNT} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
+- name: python
+  entrypoint: python3
+  args: ["-- version"]
+- name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
+  entrypoint: 'curl'
+  args: [ 'https://bootstrap.pypa.io/get-pip.py', '-o', 'get-pip.py', '--user' ]
+- name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
+  entrypoint: apt-get
+  args: [ 'update', '--allow-releaseinfo-change', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y', '--user' ]
+- name: python
+  entrypoint: python3
+  args: [ 'get-pip.py', 'pip==22', '--user']
+- name: python
+  entrypoint: pip3
+  args: ["install", "virtualenv", "--user"]
+- name: python
+  entrypoint: pip3
+  args: ["install", "-r", "requirements.txt", "--user"]
 # [END cloudbuild_npm_node]
