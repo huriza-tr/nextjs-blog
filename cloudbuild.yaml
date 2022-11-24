@@ -55,8 +55,12 @@ steps:
 # 7
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
-  args: [ 'update', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y']
+  args: ['update']
 # 8
+- name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
+  entrypoint: apt-get
+  args: ['install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y']
+# 9
 - name: python
   entrypoint: python3
   args: [ 'get-pip.py', 'pip==22']
