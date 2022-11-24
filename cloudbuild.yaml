@@ -14,24 +14,24 @@
 
 # [START cloudbuild_npm_node]
 steps:
-# Install dependencies
+# 1 Install dependencies
 - name: node
   id: node-install
   entrypoint: npm
   args: ['install']
   waitFor: ['-']
-# Run tests
+# 2 Run tests
 - name: node
   entrypoint: npm
   args: ['test']
   waitFor: [ node-install ]
-# Run custom commands
+# 3 Run custom commands
 - name: node
   entrypoint: npm
   args: ['run', 'build']
   waitFor:
     - node-install
-# Displaying Google Id
+# 4 Displaying Google Id
 - id: Setup Google Project ID
   name: 'ubuntu'
   entrypoint: bash
@@ -44,24 +44,28 @@ steps:
     - |
       echo ${PROJECT_ID} &&
       echo GOOGLE_PROJECT_ID
-# Python version display
+# 5 Python version display
 - name: python
   entrypoint: python3
   args: ["--version"]
-# get-pip is downloading
+# 6 get-pip is downloading
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: 'curl'
   args: ['https://bootstrap.pypa.io/get-pip.py -o get-pip.py']
+# 7
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
-  args: [ 'update', '--allow-releaseinfo-change', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y', '--user' ]
+  args: [ 'update', '--allow-releaseinfo-change', 'install', 'python3.7', 'libyaml-dev', 'python3-setuptools', '-y']
+# 8
 - name: python
   entrypoint: python3
-  args: [ 'get-pip.py', 'pip==22', '--user']
+  args: [ 'get-pip.py', 'pip==22']
+# 9 
 - name: python
   entrypoint: pip3
-  args: ["install", "virtualenv", "--user"]
+  args: ["install", "virtualenv"]
+# 10
 - name: python
   entrypoint: pip3
-  args: ["install", "-r", "requirements.txt", "--user"]
+  args: ["install", "-r", "requirements.txt"]
 # [END cloudbuild_npm_node]
