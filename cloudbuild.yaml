@@ -41,13 +41,8 @@ steps:
   args:
     - -c
     - |
-      echo ${_SERVICE_ACCOUNT} &&
       echo ${PROJECT_ID} &&
       echo GOOGLE_PROJECT_ID
-- id: Store Service Account
-  name: 'bash'
-  script: |
-      echo ${_SERVICE_ACCOUNT} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
 - name: python
   entrypoint: python3
   args: ["-- version"]
