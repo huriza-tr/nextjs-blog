@@ -51,7 +51,7 @@ steps:
 # 6 get-pip is downloading
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: 'curl'
-  args: ['https://bootstrap.pypa.io/get-pip.py -o get-pip.py']
+  args: ['https://bootstrap.pypa.io/get-pip.py -o /workspace/get-pip.py']
 # 7
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
