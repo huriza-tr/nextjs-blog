@@ -45,7 +45,7 @@ steps:
       echo GOOGLE_PROJECT_ID
 - name: python
   entrypoint: python3
-  args: ["-- version"]
+  args: ["--version"]
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: 'curl'
   args: [ 'https://bootstrap.pypa.io/get-pip.py', '-o', 'get-pip.py', '--user' ]
