@@ -271,10 +271,10 @@ steps:
     - -c 
     - |
       echo "Running Webpack Build"
-- name: node
-  entrypoint: npm
-  timeout: '45000s'
-  args: [ 'run', 'webpack', '--env', 'prod=true', '--progress' ]
+# - name: node
+#   entrypoint: npm
+#   timeout: '45000s'
+#   args: [ 'run', 'webpack', '--env', 'prod=true', '--progress' ]
 - name: node
   entrypoint: npm
   id: Building Module 3/3
