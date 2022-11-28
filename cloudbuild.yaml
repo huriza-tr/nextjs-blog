@@ -92,7 +92,7 @@ steps:
 - name: node
   id: node-install hosting
   entrypoint: yarn
-  args: ["install --non-interactive --production=false"]
+  args: [ 'install', '--non-interactive', '--production=false']
 # - name: node
 #   id: Run Typecheck
 #   entrypoint: yarn
