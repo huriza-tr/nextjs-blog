@@ -44,7 +44,7 @@ steps:
   args:
     - -c
     - |
-      echo ${PROJECT_ID} &&
+      echo ${PROJECT_ID}
 # 5 Storing service account key
 - name: 'ubuntu'
   entrypoint: bash
