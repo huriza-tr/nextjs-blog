@@ -275,15 +275,15 @@ steps:
 #   entrypoint: npm
 #   timeout: '45000s'
 #   args: [ 'run', 'webpack', '--env', 'prod=true', '--progress' ]
-- name: node
-  entrypoint: npm
-  id: Building Module 3/3
-  timeout: '4500s'
-  args:
-    - -c 
-    - |
-      echo "Copying Resources" && \
-      run copy-build-resources
+# - name: node
+#   entrypoint: npm
+#   id: Building Module 3/3
+#   timeout: '4500s'
+#   args:
+#     - -c 
+#     - |
+#       echo "Copying Resources" && \
+#       run copy-build-resources
 # - name: 'gcr.io/$PROJECT_ID/firebase'
 #   id: Deploying Firebase Hosting
 #   args: ['deploy', '--project=$PROJECT_ID', '--only=hosting']
