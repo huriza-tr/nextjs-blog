@@ -54,6 +54,6 @@ steps:
   args: ['update']
 # 11
 - name: python
-  entrypoint: pip3
+  entrypoint: pip
   args: ["install -r requirements.txt"]
 # [END cloudbuild_npm_node]
