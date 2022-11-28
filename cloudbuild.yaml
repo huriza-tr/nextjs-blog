@@ -55,5 +55,5 @@ steps:
 # 11
 - name: python
   entrypoint: pip3
-  args: ["install -r /workspace/requirements.txt"]
+  args: ["install -r ./requirements.txt"]
 # [END cloudbuild_npm_node]
