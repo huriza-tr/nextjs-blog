@@ -89,7 +89,7 @@ steps:
   entrypoint: bash
   args: ["rm -f node_modules/.yarn.integrity"]
 - name: node
-  id: node-install
+  id: node-install hosting
   entrypoint: yarn
   args: ["install --non-interactive --production=false"]
 # - name: node
@@ -113,7 +113,7 @@ steps:
   entrypoint: npm
   args: ["--version"]
 - name: node
-  id: node-install
+  id: node-install function
   entrypoint: yarn
   args: ["install --production=false '--force'"]
 # - name: node
@@ -140,7 +140,7 @@ steps:
 ###Build Dataflow ends here###
 
 ###Deploy Dataflow###
-- id: Setup Google Project ID
+- id: Setup Google Project ID Deploy dataflow
   name: 'ubuntu'
   entrypoint: bash
   env:
@@ -247,7 +247,7 @@ steps:
   entrypoint: yarn
   args: [ 'add -D webpack-cli@4.10.0']
 - name: node
-  id: Install Dependencies
+  id: Install Dependencies Hosting
   entrypoint: yarn
   args: [ 'install --production=false']
 - name: ubuntu
@@ -359,7 +359,7 @@ steps:
 # ###Deploy Function ends here###
 
 # ###Deploy App###
-# - id: Setup Environment variables
+# - id: Setup Environment variables Deploy App
 #   name: 'ubuntu'
 #   entrypoint: bash
 #   env:
@@ -389,7 +389,7 @@ steps:
 # ###Deploy App ends here###
 
 # ###Deploy Workflows###
-# - id: Setup Environment variables
+# - id: Setup Environment variables Deploy Workflows
 #   name: 'ubuntu'
 #   entrypoint: bash
 #   env:
