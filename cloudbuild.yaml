@@ -136,9 +136,9 @@ steps:
   id: Install tox
   entrypoint: pip
   args: [ 'install', 'tox']
-- name: 'python'
-  id: Run Tests using tox
-  args: ['tox']
+# - name: 'python'
+#   id: Run Tests using tox
+#   args: ['tox']
 ###Build Dataflow ends here###
 
 ###Deploy Dataflow###
