@@ -63,7 +63,7 @@ steps:
 # 9
 - name: python
   entrypoint: python3
-  args: [ '/workspace/get-pip.py pip==22']
+  args: [ '/workspace/get-pip.py']
 # 10
 - name: python
   entrypoint: pip3
