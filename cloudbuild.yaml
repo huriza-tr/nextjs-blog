@@ -267,12 +267,14 @@ steps:
 - name: ubuntu
   entrypoint: bash
   id: Building Module 2/3
-  timeout: '45000s'
   args:
     - -c 
     - |
-      echo "Running Webpack Build" && \
-      node --max_old_space_size=3072 ./node_modules/.bin/webpack --env prod=true --env ci=true --progress
+      echo "Running Webpack Build"
+- name: node
+  entrypoint: npm
+  timeout: '45000s'
+  args: [ 'run', 'webpack', '--env', 'prod=true', '--progress' ]
 - name: node
   entrypoint: npm
   id: Building Module 3/3
