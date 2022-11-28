@@ -40,12 +40,11 @@ steps:
   env:
     - 'GCLOUD_SERVICE_KEY=${_SERVICE_ACCOUNT}'
     - 'project_name=${PROJECT_ID}'
-    - 'GOOGLE_PROJECT_ID=${!project_name}'
+    # - 'GOOGLE_PROJECT_ID=${!project_name}'
   args:
     - -c
     - |
       echo ${PROJECT_ID} &&
-      echo GOOGLE_PROJECT_ID
 # 5 Storing service account key
 - name: 'ubuntu'
   entrypoint: bash
@@ -147,15 +146,14 @@ steps:
   env:
     - 'GCLOUD_SERVICE_KEY=${BRANCH_NAME}_google_service_account'
     - 'project_name=${BRANCH_NAME}_branch'
-    - 'GOOGLE_PROJECT_ID=${!project_name}'
+    # - 'GOOGLE_PROJECT_ID=${!project_name}'
     - 'GOOGLE_APPLICATION_CREDENTIALS=/workspaces/gcloud-service-key.json'
-    - 'GCPProject=${GOOGLE_PROJECT_ID}'
+    # - 'GCPProject=${GOOGLE_PROJECT_ID}'
     - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
   args:
     - -c
     - |
       echo project_name
-      echo GOOGLE_PROJECT_ID
       echo GCLOUD_SERVICE_KEY
       echo GOOGLE_APPLICATION_CREDENTIALS
       echo GCPProject
@@ -294,15 +292,14 @@ steps:
   env:
     - 'GCLOUD_SERVICE_KEY=${BRANCH_NAME}_google_service_account'
     - 'project_name=${BRANCH_NAME}_branch'
-    - 'GOOGLE_PROJECT_ID=${!project_name}'
+    # - 'GOOGLE_PROJECT_ID=${!project_name}'
     - 'GOOGLE_APPLICATION_CREDENTIALS=/workspaces/gcloud-service-key.json'
-    - 'GCPProject=${GOOGLE_PROJECT_ID}'
+    # - 'GCPProject=${GOOGLE_PROJECT_ID}'
     - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
   args:
     - -c
     - |
       echo project_name
-      echo GOOGLE_PROJECT_ID
       echo GCLOUD_SERVICE_KEY
       echo GOOGLE_APPLICATION_CREDENTIALS
       echo GCPProject
