@@ -252,9 +252,9 @@ steps:
   id: Install Dependencies Hosting
   entrypoint: yarn
   args: [ 'install', '--production=false']
-- name: ubuntu
-  entrypoint: bash
-  args: [ 'set', '-eo', 'pipefail' ]
+# - name: ubuntu
+#   entrypoint: bash
+#   args: [ 'set', '-eo', 'pipefail' ]
 - name: ubuntu
   entrypoint: bash
   id: Building Module 1/3
