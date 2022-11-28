@@ -116,7 +116,7 @@ steps:
 - name: node
   id: node-install function
   entrypoint: yarn
-  args: ["install --production=false --force"]
+  args: [ 'install', '--production=false', '--force']
 # - name: node
 #   id: Run Typecheck
 #   entrypoint: npm
@@ -246,14 +246,14 @@ steps:
 - name: node
   id: Install Webpack CLI
   entrypoint: yarn
-  args: [ 'add -D webpack-cli@4.10.0']
+  args: [ 'add', '-D', 'webpack-cli@4.10.0']
 - name: node
   id: Install Dependencies Hosting
   entrypoint: yarn
-  args: [ 'install --production=false']
+  args: [ 'install', '--production=false']
 - name: ubuntu
   entrypoint: bash
-  args: [ 'set -eo pipefail' ]
+  args: [ 'set', '-eo', 'pipefail' ]
 - name: ubuntu
   entrypoint: bash
   id: Building Module 1/3
