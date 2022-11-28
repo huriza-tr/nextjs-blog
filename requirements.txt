@@ -47,7 +47,6 @@ pluggy
 proto-plus
 protobuf
 py
-pyarrow
 pyasn1
 pyasn1-modules
 pycparser
