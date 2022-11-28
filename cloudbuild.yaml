@@ -48,26 +48,10 @@ steps:
 - name: python
   entrypoint: python3
   args: ["--version"]
-# 6 get-pip is downloading
-- name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
-  entrypoint: 'curl'
-  args: ['https://bootstrap.pypa.io/get-pip.py -o /workspace/get-pip.py']
-# 7
+# 6
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   entrypoint: apt-get
   args: ['update']
-# 8
-# - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
-#   entrypoint: apt-get
-#   args: ['install', 'python3.7 libyaml-dev python3-setuptools -y']
-# 9
-- name: python
-  entrypoint: python3
-  args: [ '/workspace/get-pip.py']
-# 10
-- name: python
-  entrypoint: pip3
-  args: ['install virtualenv']
 # 11
 - name: python
   entrypoint: pip3
