@@ -66,25 +66,6 @@ steps:
 ###Build App Ends here###
 
 ###Build Hosting####
-# - id: build-hosting
-# - id: Configure Firebase Project Alias
-#   name: 
-# # Firebase project aliases, stored in .firebaserc, must match GitHub branch names
-#   args:
-#     - echo FIREBASE_ALIAS=staging
-# - name:
-#   id: Check BASH_ENV
-#   args:
-#     - curl -sL https://firebase.tools | bash
-# # name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'coverage!
-# - name:
-#   id: Get Firebase Config
-#   args:
-#     - firebase use $FIREBASE_ALIAS
-# - name:
-#   id: Save Firebase Config
-#   args:
-#     - firebase functions:config:get > .name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'imeconfig.json
 # - name: "ubuntu"
 #   entrypoint: bash
 #   args: ["rm -f node_modules/.yarn.integrity"]
@@ -160,15 +141,6 @@ steps:
       echo GOOGLE_APPLICATION_CREDENTIALS
       echo GCPProject
       echo GCSBucketName
-# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:404.0.0'
-#   id: Setup GCLOUD Auth
-#   entrypoint: gcloud
-#   args: 
-#     - -c
-#     - |
-#       gcloud auth activate-service-account \
-#         --key-file=/workspace/gcloud-service-key.json
-#       gcloud --quiet config set project ${PROJECT_ID}
 # - name: python
 #   id: Deploy Attendance Pipeline
 #   args:
@@ -271,10 +243,9 @@ steps:
     - -c 
     - |
       echo "Running Webpack Build"
-# - name: node
-#   entrypoint: npm
-#   timeout: '45000s'
-#   args: [ 'run', 'webpack', '--env', 'prod=true', '--progress' ]
+- name: node
+  timeout: '45000s'
+  args: [ 'node', '--max_old_space_size=3072', './node_modules/.bin/webpack', '--env', 'prod=true', '--env ci=true', '--progress' ]
 # - name: node
 #   entrypoint: npm
 #   id: Building Module 3/3
