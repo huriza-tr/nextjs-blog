@@ -223,7 +223,7 @@ steps:
 - name: node
   id: Install Dependencies Hosting
   entrypoint: yarn
-  args: [ 'install', '--production=false']
+  args: [ 'install']
 # - name: ubuntu
 #   entrypoint: bash
 #   args: [ 'set', '-eo', 'pipefail' ]
