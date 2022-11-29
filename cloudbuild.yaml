@@ -54,12 +54,12 @@ steps:
     - |
       echo ${!GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
 # 6 Python version display
-- name: python:3.10
+- name: python:3.7
   id: Python Version check
   entrypoint: python3
   args: ["--version"]
 # 11
-- name: python:3.10
+- name: python:3.7
   id: Install Dependencies
   entrypoint: pip3
   args: ["install", "-r", "requirements.txt", "--user"]
