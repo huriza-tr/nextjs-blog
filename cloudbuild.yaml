@@ -216,11 +216,11 @@ steps:
 ###Deploy Dataflow ends here###
 
 ###Deploy Hosting###
-- name: node
+- name: node:14.20.0
   id: Install Webpack CLI
   entrypoint: yarn
   args: [ 'add', '-D', 'webpack-cli@4.10.0']
-- name: node
+- name: node:14.20.0
   id: Install Dependencies Hosting
   entrypoint: yarn
   args: [ 'install']
@@ -243,7 +243,7 @@ steps:
     - -c 
     - |
       echo "Running Webpack Build"
-- name: node
+- name: node:14.20.0
   timeout: '45000s'
   args: [ 'node', '--max_old_space_size=3072', './node_modules/.bin/webpack', '--env', 'prod=true', '--env ci=true', '--progress' ]
 # - name: node
