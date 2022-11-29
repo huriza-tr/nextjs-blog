@@ -242,10 +242,11 @@ steps:
   args:
     - -c 
     - |
-      echo "Running Webpack Build"
-- name: node:14.20.0
-  timeout: '45000s'
-  args: [ 'node', '--max_old_space_size=3072', './node_modules/.bin/webpack', '--env', 'prod=true', '--env ci=true', '--progress' ]
+      echo "Running Webpack Build" && \
+      ls ./node_modules/.bin
+# - name: node:14.20.0
+#   timeout: '45000s'
+#   args: [ 'node', '--max_old_space_size=3072', './node_modules/.bin/webpack', '--env', 'prod=true', '--env ci=true', '--progress' ]
 # - name: node
 #   entrypoint: npm
 #   id: Building Module 3/3
