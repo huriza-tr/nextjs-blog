@@ -54,15 +54,15 @@ steps:
     - |
       echo ${!GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
 # 6 Python version display
-- name: python
+- name: python:3.10
   id: Python Version check
   entrypoint: python3
   args: ["--version"]
 # 11
-# - name: python
-#   id: Install Dependencies
-#   entrypoint: pip
-#   args: ["install", "-r", "requirements.txt", "--user"]
+- name: python:3.10
+  id: Install Dependencies
+  entrypoint: pip3
+  args: ["install", "-r", "requirements.txt", "--user"]
 ###Build App Ends here###
 
 ###Build Hosting####
@@ -105,7 +105,7 @@ steps:
 #   entrypoint: yarn
 #   id: Run Tests
 #   timeout: "2700s"
-#   args: [ 'run t:c']
+#   args: [ 'run', 't:c']
 ###Build Hosting ends here###
 
 ###Build Functions###
@@ -120,15 +120,15 @@ steps:
 # - name: node
 #   id: Run Typecheck
 #   entrypoint: npm
-#   args: ["run typecheck"]
+#   args: ['run', 'typecheck']
 # - name: node
 #   entrypoint: npm
 #   id: Run Linting Check
-#   args: ["run lint"]
+#   args: [ 'run', 'lint']
 # - name: node
 #   entrypoint: npm
 #   id: Run Coverage Tests
-#   args: [ "run coverage"]
+#   args: [ 'run', 'coverage']
 ###Build Functions ends here###
 
 ###Build Dataflow###
