@@ -14,22 +14,35 @@
 
 steps:
 ###BurpSuite Scan###
+- name: 'ubuntu'
+  volumes:
+  - name: 'vol1'
+    path: '/persistent_volume'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Hello, world!" > /persistent_volume/dastardly-report.xml
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
+  volumes:
+  - name: 'vol1'
+    path: '/persistent_volume'
   args:
       - -c
       - |
         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
         DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
-        DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
+        DASTARDLY_OUTPUT_FILE=/persistent_volume/dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
+  allowExitCodes: [0]
 - id: "Read Values"
   name: ubuntu
   entrypoint: bash
-  args:
-    - -c
-    - |
-      echo "First we saved " $(cat /workspace/dastardly-report.xml)
+  volumes:
+  - name: 'vol1'
+    path: '/persistent_volume'
+  args: ['cat', '/persistent_volume/dastardly-report.xml']
 ###BurpSuite Scan Ends here###
 
 ###Build App###
