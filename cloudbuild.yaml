@@ -30,14 +30,18 @@ steps:
       - -c
       - |
         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
-        DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
+        DASTARDLY_TARGET_URL=https://mari.com -e \
         DASTARDLY_OUTPUT_FILE=./dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
   allowExitCodes: [0]
-# - id: "Read Values"
-#   name: ubuntu
-#   entrypoint: bash
-#   args: ['cat', '/workspace/dastardly-report.xml']
+- id: "Read Values"
+  name: ubuntu
+  entrypoint: bash
+  args:
+    - '-c'
+    - |
+      cd /workspace
+      ls dastardly-report.xml
 ###BurpSuite Scan Ends here###
 
 ###Build App###
