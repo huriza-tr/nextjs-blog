@@ -15,9 +15,23 @@
 steps:
 ###BurpSuite Scan###
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'run', --user $(id -u) --rm -v $(pwd):/dastardly -e \
-          DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
-          DASTARDLY_OUTPUT_FILE=/dastardly/dastardly-report.xml ]
+  env:
+    - 'DASTARDLY_TARGET_URL=https://ginandjuice.shop'
+  entrypoint: 'bash'
+  args:
+      - -c
+      - |
+        docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
+        ${DASTARDLY_TARGET_URL} \
+        DASTARDLY_OUTPUT_FILE=/workspace/dastardly/dastardly-report.xml \
+        public.ecr.aws/portswigger/dastardly:latest
+- id: "Read Values"
+  name: ubuntu
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "First we saved " $(cat /workspace/dastardly/dastardly-report.xml)
 ###BurpSuite Scan Ends here###
 
 ###Build App###
