@@ -21,8 +21,8 @@ steps:
   - |
     ls /workspace
     cd /workspace
-    ls ./dastardly-report.xml
-    chmod rwx ./dastardly-report.xml
+    ls dastardly-report.xml
+    chmod -wx dastardly-report.xml
     ls -l
 # - name: 'gcr.io/cloud-builders/docker'
 #   entrypoint: 'bash'
@@ -33,7 +33,7 @@ steps:
 #         DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
 #         DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
 #         public.ecr.aws/portswigger/dastardly:latest
-  allowExitCodes: [0]
+  # allowExitCodes: [0]
 # - id: "Read Values"
 #   name: ubuntu
 #   entrypoint: bash
