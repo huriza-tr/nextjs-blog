@@ -22,15 +22,15 @@ steps:
     ls /workspace
     cd /workspace
     ls -l
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args:
-      - -c
-      - |
-        docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
-        DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
-        DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
-        public.ecr.aws/portswigger/dastardly:latest
+# - name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'bash'
+#   args:
+#       - -c
+#       - |
+#         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
+#         DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
+#         DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
+#         public.ecr.aws/portswigger/dastardly:latest
   allowExitCodes: [0]
 - id: "Read Values"
   name: ubuntu
