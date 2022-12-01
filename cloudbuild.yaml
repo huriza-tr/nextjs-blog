@@ -27,7 +27,7 @@ steps:
       - |
         docker run --user $(id -u) --rm -volume $(pwd):/dastardly -e \
         DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
-        DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml - \
+        DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
   allowExitCodes: [0]
 - id: "Read Values"
