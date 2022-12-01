@@ -12,68 +12,51 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START cloudbuild_npm_node]
 steps:
-# 1 Install dependencies
-- name: node
-  id: node-install
-  entrypoint: npm
-  args: ['install']
-  waitFor: ['-']
-# 2 Run tests
-- name: node
-  entrypoint: npm
-  args: ['test']
-  waitFor: [ node-install ]
-# 3 Run custom commands
-- name: node
-  entrypoint: npm
-  args: ['run', 'build']
-  waitFor:
-    - node-install
-# [END cloudbuild_npm_node]
+###BurpSuite Scan###
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'run', --user $(id -u) --rm -v $(pwd):/dastardly -e \
+          DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
+          DASTARDLY_OUTPUT_FILE=/dastardly/dastardly-report.xml ]
+###BurpSuite Scan Ends here###
+
 ###Build App###
 # 4 Displaying Google Id
-- id: Setup Google Project ID
-  name: 'ubuntu'
-  entrypoint: bash
-  env:
-    - 'GCLOUD_SERVICE_KEY=${_SERVICE_ACCOUNT}'
-    - 'project_name=${PROJECT_ID}'
-    # - 'GOOGLE_PROJECT_ID=${!project_name}'
-  args:
-    - -c
-    - |
-      echo ${PROJECT_ID}
+# - id: Setup Google Project ID
+#   name: 'ubuntu'
+#   entrypoint: bash
+#   env:
+#     - 'project_name=${PROJECT_ID}'
+#     - 'GOOGLE_PROJECT_ID=${PROJECT_ID}'
+#   args:
+#     - echo ${PROJECT_ID}
 # 5 Storing service account key
-- name: 'ubuntu'
-  entrypoint: bash
-  id: Store Service Account
-  args:
-    - -c
-    - |
-      echo ${!GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
+# - name: 'ubuntu'
+#   entrypoint: bash
+#   id: Store Service Account
+#   args:
+#     - echo ${!GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > /workspace/gcloud-service-key.json
 # 6 Python version display
-- name: python:3.7
-  id: Python Version check
-  entrypoint: python3
-  args: ["--version"]
+# - name: python:3.7
+#   id: Python Version check
+#   entrypoint: python3
+#   args: ["--version"]
 # 11
-- name: python:3.7
-  id: Install Dependencies
-  entrypoint: pip3
-  args: ["install", "-r", "requirements.txt", "--user"]
+# - name: python:3.7
+#   id: Install Dependencies
+#   entrypoint: pip3
+#   args: ["install", "-r", "requirements.txt", "--user"]
 ###Build App Ends here###
 
 ###Build Hosting####
 # - name: "ubuntu"
 #   entrypoint: bash
 #   args: ["rm -f node_modules/.yarn.integrity"]
-  # error of no such file or directory
-- name: node
-  id: node-install hosting
-  entrypoint: yarn
-  args: [ 'install', '--non-interactive', '--production=false']
+#   # error of no such file or directory
+# - name: node
+#   id: node-install hosting
+#   entrypoint: yarn
+#   args: [ 'install', '--non-interactive', '--production=false']
 # - name: node
 #   id: Run Typecheck
 #   entrypoint: yarn
@@ -90,14 +73,14 @@ steps:
 ###Build Hosting ends here###
 
 ###Build Functions###
-- name: node
-  id: Check npm version
-  entrypoint: npm
-  args: ["--version"]
-- name: node
-  id: node-install function
-  entrypoint: yarn
-  args: [ 'install', '--production=false', '--force']
+# - name: node
+#   id: Check npm version
+#   entrypoint: npm
+#   args: ["--version"]
+# - name: node
+#   id: node-install function
+#   entrypoint: yarn
+#   args: [ 'install', '--production=false', '--force']
 # - name: node
 #   id: Run Typecheck
 #   entrypoint: npm
@@ -113,140 +96,137 @@ steps:
 ###Build Functions ends here###
 
 ###Build Dataflow###
-- name: 'python'
-  id: Install tox
-  entrypoint: pip
-  args: [ 'install', 'tox']
+# - name: 'python'
+#   id: Install tox
+#   entrypoint: pip
+#   args: [ 'install', 'tox']
 # - name: 'python'
 #   id: Run Tests using tox
 #   args: ['tox']
 ###Build Dataflow ends here###
 
 ###Deploy Dataflow###
-- id: Setup Google Project ID Deploy dataflow
-  name: 'ubuntu'
-  entrypoint: bash
-  env:
-    - 'GCLOUD_SERVICE_KEY=${BRANCH_NAME}_google_service_account'
-    - 'project_name=${BRANCH_NAME}_branch'
-    # - 'GOOGLE_PROJECT_ID=${!project_name}'
-    - 'GOOGLE_APPLICATION_CREDENTIALS=/workspaces/gcloud-service-key.json'
-    # - 'GCPProject=${GOOGLE_PROJECT_ID}'
-    - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
-  args:
-    - -c
-    - |
-      echo project_name
-      echo GCLOUD_SERVICE_KEY
-      echo GOOGLE_APPLICATION_CREDENTIALS
-      echo GCPProject
-      echo GCSBucketName
-# - name: python
+# - id: Setup Google Project ID Deploy dataflow
+#   name: 'ubuntu'
+#   entrypoint: bash
+#   env:
+#     - 'project_name=${PROJECT_ID}'
+#     - 'GOOGLE_PROJECT_ID=${PROJECT_ID}'
+#     - 'GCPProject=${PROJECT_ID}'
+#     - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
+#   args:
+#     - -c
+#     - |
+#       echo ${project_name}
+#       echo ${GCPProject}
+#       echo ${GCSBucketName}
+# - name: python:3.7
 #   id: Deploy Attendance Pipeline
 #   args:
 #     - -c 
 #     - |
 #       ./deployAttendanceCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Course Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployCoursesCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Enrollment Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployEnrollmentsCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Grades Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployGradesCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Khan Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployKhanActivities.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Schools Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deploySchoolCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Sections Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deploySectionsCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Staff Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployStaffCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Student Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployStudentCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Term Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployTermCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy VasolCeds Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployVasolCedsCSV.sh
-# - name: python
+# - name: python:3.7
 #   id: Deploy Discipline Pipeline
 #   args:
 #     - -c
 #     - |
 #       ./deployDisciplineCSV.sh
-###Deploy Dataflow ends here###
+# ###Deploy Dataflow ends here###
 
-###Deploy Hosting###
-- name: node:14.20.0
-  id: Install Webpack CLI
-  entrypoint: yarn
-  args: [ 'add', '-D', 'webpack-cli@4.10.0']
-- name: node:14.20.0
-  id: Install Dependencies Hosting
-  entrypoint: yarn
-  args: [ 'install']
+# ###Deploy Hosting###
+# - name: node:14.20.0
+#   id: Install Webpack CLI
+#   entrypoint: yarn
+#   args: [ 'add', '-D', 'webpack-cli@4.10.0']
+# - name: node:14.20.0
+#   id: Install Dependencies Hosting
+#   entrypoint: yarn
+#   args: [ 'install']
 # - name: ubuntu
 #   entrypoint: bash
 #   args: [ 'set', '-eo', 'pipefail' ]
-- name: ubuntu
-  entrypoint: bash
-  id: Building Module 1/3
-  timeout: '45000s'
-  args:
-    - -c
-    - |
-      echo "Clearing Existing Build Artifacts" && \
-      rm -rf build
-- name: ubuntu
-  entrypoint: bash
-  id: Building Module 2/3
-  args:
-    - -c 
-    - |
-      echo "Running Webpack Build" && \
-      ls ./node_modules/.bin
+# - name: ubuntu
+#   entrypoint: bash
+#   id: Building Module 1/3
+#   timeout: '45000s'
+#   args:
+#     - -c
+#     - |
+#       echo "Clearing Existing Build Artifacts" && \
+#       rm -rf build
+# - name: ubuntu
+#   entrypoint: bash
+#   id: Building Module 2/3
+#   args:
+#     - -c 
+#     - |
+#       echo "Running Webpack Build" && \
+#       ls ./node_modules/.bin
 # - name: node:14.20.0
 #   timeout: '45000s'
-#   args: [ 'node', '--max_old_space_size=3072', './node_modules/.bin/webpack', '--env', 'prod=true', '--env ci=true', '--progress' ]
+#   entrypoint: npm
+#   args: [ 'build:webpack' ]
 # - name: node
 #   entrypoint: npm
 #   id: Building Module 3/3
@@ -256,30 +236,25 @@ steps:
 #     - |
 #       echo "Copying Resources" && \
 #       run copy-build-resources
-# - name: 'gcr.io/$PROJECT_ID/firebase'
+# - name: 'gcr.io/${PROJECT_ID}/firebase'
 #   id: Deploying Firebase Hosting
-#   args: ['deploy', '--project=$PROJECT_ID', '--only=hosting']
+#   args: ['deploy', '--project=${PROJECT_ID}', '--only=hosting']
+
 ###Deploy Hosting ends here###
 
 ###Deploy Functions###
-- id: Setup Environment variables
-  name: 'ubuntu'
-  entrypoint: bash
-  env:
-    - 'GCLOUD_SERVICE_KEY=${BRANCH_NAME}_google_service_account'
-    - 'project_name=${BRANCH_NAME}_branch'
-    # - 'GOOGLE_PROJECT_ID=${!project_name}'
-    - 'GOOGLE_APPLICATION_CREDENTIALS=/workspaces/gcloud-service-key.json'
-    # - 'GCPProject=${GOOGLE_PROJECT_ID}'
-    - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
-  args:
-    - -c
-    - |
-      echo project_name
-      echo GCLOUD_SERVICE_KEY
-      echo GOOGLE_APPLICATION_CREDENTIALS
-      echo GCPProject
-      echo GCSBucketName
+# - id: Setup Environment variables
+#   name: 'ubuntu'
+#   entrypoint: bash
+#   env:
+#     # - 'GOOGLE_PROJECT_ID=${PROJECT_ID}'
+#     # - 'GCPProject=${GOOGLE_PROJECT_ID}'
+#     - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
+#   args:
+#     - -c
+#     - |
+#       echo ${GCPProject}
+#       echo ${GCSBucketName}
 # - name: node
 #   id: Building Cloud Funtions
 #   entrypoint: yarn
@@ -331,7 +306,7 @@ steps:
 #   args: [ 'deploy', '--only functions:utilTriggers', '--force', '--debug']
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   id: Deploying Reports Cloud Functions
-#   args: [ 'deploy', '--only functions:reports', '--force', '--debug']
+  # args: [ 'deploy', '--only functions:reports', '--force', '--debug']
 # ###Deploy Function ends here###
 
 # ###Deploy App###
@@ -341,19 +316,17 @@ steps:
 #   env:
 #     - 'GCLOUD_SERVICE_KEY=${BRANCH_NAME}_google_service_account'
 #     - 'project_name=${BRANCH_NAME}_branch'
-#     - 'GOOGLE_PROJECT_ID=${!project_name}'
-#     - 'GOOGLE_APPLICATION_CREDENTIALS=/workspaces/gcloud-service-key.json'
-#     - 'GCPProject=${GOOGLE_PROJECT_ID}'
+#     - 'GOOGLE_PROJECT_ID=${PROJECT_ID}'
+#     - 'GCPProject=${PROJECT_ID}'
 #     - 'GCSBucketName="mari-${BRANCH_NAME}-sftp-outflow"'
 #   args:
 #     - -c
 #     - |
-#       echo project_name
-#       echo GOOGLE_PROJECT_ID
-#       echo GCLOUD_SERVICE_KEY
-#       echo GOOGLE_APPLICATION_CREDENTIALS
-#       echo GCPProject
-#       echo GCSBucketName
+#       echo ${project_name}
+#       echo ${GOOGLE_PROJECT_ID}
+#       echo ${GOOGLE_APPLICATION_CREDENTIALS}
+#       echo ${GCPProject}
+#       echo ${GCSBucketName}
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: gcloud
 #   id: App Deploy
