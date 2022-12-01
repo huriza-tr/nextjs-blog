@@ -22,7 +22,7 @@ steps:
       - -c
       - |
         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
-        ${_DASTARDLY_TARGET_URL} \
+        DASTARDLY_TARGET_URL=${_DASTARDLY_TARGET_URL} \
         DASTARDLY_OUTPUT_FILE=/workspace/dastardly/dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
 - id: "Read Values"
