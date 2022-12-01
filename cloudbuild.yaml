@@ -21,6 +21,8 @@ steps:
   - |
     ls /workspace
     cd /workspace
+    ls ./dastardly-report.xml
+    chmod rwx ./dastardly-report.xml
     ls -l
 # - name: 'gcr.io/cloud-builders/docker'
 #   entrypoint: 'bash'
