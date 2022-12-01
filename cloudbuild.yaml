@@ -33,15 +33,13 @@ steps:
         DASTARDLY_TARGET_URL=https://mari.com -e \
         DASTARDLY_OUTPUT_FILE=./dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
-  allowExitCodes: [0]
 - id: "Read Values"
   name: ubuntu
   entrypoint: bash
   args:
     - '-c'
     - |
-      cd /workspace
-      ls dastardly-report.xml
+      cat ./dastardly-report.xml
 ###BurpSuite Scan Ends here###
 
 ###Build App###
