@@ -34,10 +34,10 @@ steps:
 #         DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
 #         public.ecr.aws/portswigger/dastardly:latest
   allowExitCodes: [0]
-- id: "Read Values"
-  name: ubuntu
-  entrypoint: bash
-  args: ['cat', '/workspace/dastardly-report.xml']
+# - id: "Read Values"
+#   name: ubuntu
+#   entrypoint: bash
+#   args: ['cat', '/workspace/dastardly-report.xml']
 ###BurpSuite Scan Ends here###
 
 ###Build App###
