@@ -21,7 +21,7 @@ steps:
       - |
         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
         DASTARDLY_TARGET_URL=https://ginandjuice.shop -e \
-        DASTARDLY_OUTPUT_FILE=/workspace/dastardly/dastardly-report.xml \
+        DASTARDLY_OUTPUT_FILE=/workspace/dastardly-report.xml \
         public.ecr.aws/portswigger/dastardly:latest
 - id: "Read Values"
   name: ubuntu
@@ -29,7 +29,7 @@ steps:
   args:
     - -c
     - |
-      echo "First we saved " $(cat /workspace/dastardly/dastardly-report.xml)
+      echo "First we saved " $(cat /workspace/dastardly-report.xml)
 ###BurpSuite Scan Ends here###
 
 ###Build App###
