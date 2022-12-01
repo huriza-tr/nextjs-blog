@@ -20,6 +20,8 @@ steps:
   - '-c'
   - |
     ls /workspace
+    cd /workspace
+    ls -l
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args:
