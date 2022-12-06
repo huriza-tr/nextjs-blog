@@ -13,7 +13,7 @@
 # limitations under the License.
 
 steps:
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/$PROJECT_ID/sonar-scanner'
   args:
     - 'sonar.projectKey=MARI-Development_everest_AYFKPw64ZIbEw6Jfkd69'
     - 'sonar.sources=./'
@@ -23,8 +23,6 @@ steps:
     - 'sonar.python.version=3.7'
     - 'sonar.javascript.lcov.reportPaths=./coverage/lcov.info,./functions/coverage/lcov.info'
     - 'sonar.python.coverage.reportPaths=./dataflow/coverage.xml'
-  images:
-    - 'gcr.io/$PROJECT_ID/sonar-scanner:latest'
 
 ###BurpSuite Scan###
 # - name: 'ubuntu'
