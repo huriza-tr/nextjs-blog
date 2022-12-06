@@ -13,33 +13,46 @@
 # limitations under the License.
 
 steps:
-###BurpSuite Scan###
-- name: 'ubuntu'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    ls /workspace
-    cd /workspace
-    ls dastardly-report.xml
-    chmod a+w dastardly-report.xml
-    ls -l
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
   args:
-      - -c
-      - |
-        docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
-        DASTARDLY_TARGET_URL=https://mari.com -e \
-        DASTARDLY_OUTPUT_FILE=./dastardly-report.xml \
-        public.ecr.aws/portswigger/dastardly:latest
-- id: "Read Values"
-  name: ubuntu
-  entrypoint: bash
-  args:
-    - '-c'
-    - |
-      cat ./dastardly-report.xml
+    - 'sonar.projectKey=MARI-Development_everest_AYFKPw64ZIbEw6Jfkd69'
+    - 'sonar.sources=./'
+    - 'sonar.host.url=https://sonar.mari.com'
+    - 'sonar.login=ee91ae59ce4eaa2a4225cf5af908e307045fd5b2'
+    - 'sonar.exclusions=node_modules/*,**/*.txt,**/*.json,coverage/*,functions/coverage/*,functions/node_modules/*,**/*.html'
+    - 'sonar.python.version=3.7'
+    - 'sonar.javascript.lcov.reportPaths=./coverage/lcov.info,./functions/coverage/lcov.info'
+    - 'sonar.python.coverage.reportPaths=./dataflow/coverage.xml'
+  images:
+    - 'gcr.io/$PROJECT_ID/sonar-scanner:latest'
+
+###BurpSuite Scan###
+# - name: 'ubuntu'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     ls /workspace
+#     cd /workspace
+#     ls dastardly-report.xml
+#     chmod a+w dastardly-report.xml
+#     ls -l
+# - name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'bash'
+#   args:
+#       - -c
+#       - |
+#         docker run --user $(id -u) --rm -v $(pwd):/dastardly -e \
+#         DASTARDLY_TARGET_URL=https://mari.com -e \
+#         DASTARDLY_OUTPUT_FILE=./dastardly-report.xml \
+#         public.ecr.aws/portswigger/dastardly:latest
+# - id: "Read Values"
+#   name: ubuntu
+#   entrypoint: bash
+#   args:
+#     - '-c'
+#     - |
+#       cat ./dastardly-report.xml
 ###BurpSuite Scan Ends here###
 
 ###Build App###
